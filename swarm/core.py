@@ -54,7 +54,7 @@ class Swarm:
             params["properties"].pop(__CTX_VARS_NAME__, None)
             if __CTX_VARS_NAME__ in params["required"]:
                 params["required"].remove(__CTX_VARS_NAME__)
-
+        debug_print(debug, "Using tools:", tools)
         create_params = {
             "model": model_override or agent.model,
             "messages": messages,
@@ -65,7 +65,7 @@ class Swarm:
 
         if tools:
             create_params["parallel_tool_calls"] = agent.parallel_tool_calls
-
+        debug_print(debug, "Using create_params:", create_params)
         return self.client.chat.completions.create(**create_params)
 
     def handle_function_result(self, result, debug) -> Result:
@@ -265,6 +265,7 @@ class Swarm:
                 stream=stream,
                 debug=debug,
             )
+            debug_print(debug, "Received FULL completion:", completion)
             message = completion.choices[0].message
             debug_print(debug, "Received completion:", message)
             message.sender = active_agent.name

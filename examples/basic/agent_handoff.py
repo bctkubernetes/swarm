@@ -21,6 +21,6 @@ def transfer_to_spanish_agent():
 english_agent.functions.append(transfer_to_spanish_agent)
 
 messages = [{"role": "user", "content": "Hola. ¿Como estás?"}]
-response = client.run(agent=english_agent, messages=messages)
+response = client.run(agent=english_agent, messages=messages, debug=True)
 
 print(response.messages[-1]["content"])
